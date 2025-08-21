@@ -1,0 +1,10 @@
+{
+    "dependencies": [
+        "args",
+        "boost-process",
+        "boost-regex",
+        "pugixml",
+        "rang",
+        "termcolor"
+    ]
+}
