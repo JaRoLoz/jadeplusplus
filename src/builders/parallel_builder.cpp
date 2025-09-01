@@ -25,7 +25,19 @@ void builders::ParallelBuilder::build()
     for (auto &step : m_steps)
     {
         threads.emplace_back([&]
-                             { step->build(); });
+                             { 
+            try
+            {
+                step->build();
+            }
+            catch (const BuildException& ex)
+            {
+                Logger::print_error(*m_resource_name, &step->name(), std::string{ "An error ocurred while executing the build step: " } + ex.what());
+            }
+            catch (const std::exception& ex)
+            {
+                Logger::print_error(*m_resource_name, &step->name(), std::string{ "An unknown error ocurred while executing the build step: " } + ex.what());
+            } });
     }
 
     for (auto &thread : threads)
