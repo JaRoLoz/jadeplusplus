@@ -11,6 +11,8 @@ namespace builders
     class ManifestBuilder : public Builder
     {
     public:
+        inline static const std::string s_tag_name{"manifest"};
+
         ManifestBuilder(const pugi::xml_node &node, const std::shared_ptr<std::string> &resource_name, const std::shared_ptr<std::filesystem::path> &resource_path) noexcept(false);
 
         void build() override;

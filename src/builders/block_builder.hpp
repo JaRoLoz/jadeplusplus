@@ -13,6 +13,8 @@ namespace builders
     class BlockBuilder : public Builder
     {
     public:
+        inline static const std::string s_tag_name{"block"};
+
         BlockBuilder(const pugi::xml_node &node, const std::shared_ptr<std::string> &resource_name, const std::shared_ptr<std::filesystem::path> &resource_path);
         void build() override;
 

@@ -3,15 +3,15 @@
 #include "paths.hpp"
 
 Resource::constructors_collection_t Resource::s_constructors(
-    {{"bundle", [](const pugi::xml_node &node, std::shared_ptr<std::string> resource_name, std::shared_ptr<std::filesystem::path> resource_path) -> std::unique_ptr<builders::Builder>
+    {{builders::Bundler::s_tag_name, [](const pugi::xml_node &node, std::shared_ptr<std::string> resource_name, std::shared_ptr<std::filesystem::path> resource_path) -> std::unique_ptr<builders::Builder>
       { return std::make_unique<builders::Bundler>(node, resource_name, resource_path); }},
-     {"js_build", [](const pugi::xml_node &node, std::shared_ptr<std::string> resource_name, std::shared_ptr<std::filesystem::path> resource_path) -> std::unique_ptr<builders::Builder>
+     {builders::JSBuilder::s_tag_name, [](const pugi::xml_node &node, std::shared_ptr<std::string> resource_name, std::shared_ptr<std::filesystem::path> resource_path) -> std::unique_ptr<builders::Builder>
       { return std::make_unique<builders::JSBuilder>(node, resource_name, resource_path); }},
-     {"parallel", [](const pugi::xml_node &node, std::shared_ptr<std::string> resource_name, std::shared_ptr<std::filesystem::path> resource_path) -> std::unique_ptr<builders::Builder>
+     {builders::ParallelBuilder::s_tag_name, [](const pugi::xml_node &node, std::shared_ptr<std::string> resource_name, std::shared_ptr<std::filesystem::path> resource_path) -> std::unique_ptr<builders::Builder>
       { return std::make_unique<builders::ParallelBuilder>(node, resource_name, resource_path); }},
-     {"block", [](const pugi::xml_node &node, std::shared_ptr<std::string> resource_name, std::shared_ptr<std::filesystem::path> resource_path) -> std::unique_ptr<builders::Builder>
+     {builders::BlockBuilder::s_tag_name, [](const pugi::xml_node &node, std::shared_ptr<std::string> resource_name, std::shared_ptr<std::filesystem::path> resource_path) -> std::unique_ptr<builders::Builder>
       { return std::make_unique<builders::BlockBuilder>(node, resource_name, resource_path); }},
-     {"manifest", [](const pugi::xml_node &node, std::shared_ptr<std::string> resource_name, std::shared_ptr<std::filesystem::path> resource_path) -> std::unique_ptr<builders::Builder>
+     {builders::ManifestBuilder::s_tag_name, [](const pugi::xml_node &node, std::shared_ptr<std::string> resource_name, std::shared_ptr<std::filesystem::path> resource_path) -> std::unique_ptr<builders::Builder>
       { return std::make_unique<builders::ManifestBuilder>(node, resource_name, resource_path); }}});
 
 Resource::Resource(const std::filesystem::path &base_path, const std::string_view &name)
