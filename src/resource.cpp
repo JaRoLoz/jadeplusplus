@@ -9,6 +9,8 @@ Resource::constructors_collection_t Resource::s_constructors(
       { return std::make_unique<builders::JSBuilder>(node, resource_name, resource_path); }},
      {"parallel", [](const pugi::xml_node &node, std::shared_ptr<std::string> resource_name, std::shared_ptr<std::filesystem::path> resource_path) -> std::unique_ptr<builders::Builder>
       { return std::make_unique<builders::ParallelBuilder>(node, resource_name, resource_path); }},
+     {"block", [](const pugi::xml_node &node, std::shared_ptr<std::string> resource_name, std::shared_ptr<std::filesystem::path> resource_path) -> std::unique_ptr<builders::Builder>
+      { return std::make_unique<builders::BlockBuilder>(node, resource_name, resource_path); }},
      {"manifest", [](const pugi::xml_node &node, std::shared_ptr<std::string> resource_name, std::shared_ptr<std::filesystem::path> resource_path) -> std::unique_ptr<builders::Builder>
       { return std::make_unique<builders::ManifestBuilder>(node, resource_name, resource_path); }}});
 

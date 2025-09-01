@@ -17,6 +17,7 @@
 #include "builders/bundler.hpp"
 #include "builders/js_builder.hpp"
 #include "builders/parallel_builder.hpp"
+#include "builders/block_builder.hpp"
 #include "builders/manifest_builder.hpp"
 
 class Resource
