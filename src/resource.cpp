@@ -58,7 +58,7 @@ void Resource::parse_config()
 void Resource::build_resources(std::vector<Resource> &resources)
 {
     Logger::print_info(std::format("Found {} resource(s) to build\n", resources.size()));
-    std::chrono::steady_clock::time_point build_start = std::chrono::high_resolution_clock::now();
+    std::chrono::steady_clock::time_point build_start = std::chrono::steady_clock::now();
 
     std::vector<std::thread> threads;
     threads.reserve(resources.size());
@@ -74,14 +74,14 @@ void Resource::build_resources(std::vector<Resource> &resources)
         thread.join();
     }
 
-    auto time_delta = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - build_start);
+    auto time_delta = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - build_start);
     double seconds = time_delta.count() / 1000.0;
     Logger::print_ok(std::format("Build finished in {:.2f}s\n", seconds));
 }
 
 void Resource::build()
 {
-    m_build_start = std::chrono::high_resolution_clock::now();
+    m_build_start = std::chrono::steady_clock::now();
     Logger::print_info(*m_name, std::nullopt, "Starting build\n");
     for (auto &step : m_steps)
     {
@@ -98,7 +98,7 @@ void Resource::build()
             Logger::print_error(*m_name, &step->name(), std::string{"An unknown error ocurred while executing the build step: "} + ex.what());
         }
     }
-    auto time_delta = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - m_build_start);
+    auto time_delta = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - m_build_start);
     double seconds = time_delta.count() / 1000.0;
     Logger::print_ok(*m_name, std::nullopt, std::format("Built successfully in {:.2f}s\n", seconds));
 }
