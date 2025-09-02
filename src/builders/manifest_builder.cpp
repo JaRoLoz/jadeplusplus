@@ -95,6 +95,26 @@ builders::ManifestBuilder::ManifestBuilder(const pugi::xml_node &node, const std
             m_dependencies.emplace_back(child.text().as_string());
         }
     }
+
+    pugi::xml_node files = node.child("files");
+    if (files)
+    {
+        for (auto &child : files)
+        {
+            if (std::string(child.name()) != "file")
+            {
+                continue;
+            }
+
+            pugi::xml_text text = child.text();
+            if (!text)
+            {
+                continue;
+            }
+
+            m_files.emplace_back(child.text().as_string());
+        }
+    }
 }
 
 void builders::ManifestBuilder::build()
@@ -154,9 +174,19 @@ void builders::ManifestBuilder::build()
     if (!m_dependencies.empty())
     {
         out << "dependencies {\n";
-        for (auto &script : m_dependencies)
+        for (auto &dependency : m_dependencies)
         {
-            out << "    \"" << script << "\",\n";
+            out << "    \"" << dependency << "\",\n";
+        }
+        out << "}\n";
+    }
+
+    if (!m_files.empty())
+    {
+        out << "files {\n";
+        for (auto &file : m_files)
+        {
+            out << "    \"" << file << "\",\n";
         }
         out << "}\n";
     }
